@@ -17,6 +17,7 @@ export const createDocumentController = async (
     res: Response,
     next: NextFunction
 ) => {
+    console.log("Looking for files: ", req.file, req.files);
     if (!req.file) return next(new CustomError(400, "No File provided"));
 
     try {
