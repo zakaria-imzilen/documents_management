@@ -49,4 +49,13 @@ describe("🚧 Routes -- 📖 Document", () => {
             throw error;
         }
     });
+
+    test("Delete a Document", async () => {
+        try {
+            const { status } = await axiosInstance.delete(fullBaseRouteURL + "/Costume.jpg");
+            expect(status).toBe(200);
+        } catch (error) {
+            throw error;
+        }
+    });
 });
