@@ -1,0 +1,11 @@
+{
+	"users": [
+		{
+			"id": "kn92enfdsk-dsfdg-rsdgfd",
+			"firstName": "Zakaria",
+			"lastName": "Imzilen",
+			"email": "zakaria@mock.com",
+			"password": "mockPassword"
+		}
+	]
+}
