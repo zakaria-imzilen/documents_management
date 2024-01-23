@@ -23,20 +23,23 @@ export const createDocumentController = async (
     try {
         const directory = path.dirname(req.file.path);
 
-        const newDocumentData = {
-            user: {
-                ...req.body,
-            },
-            file: {
-                full_path: directory + "/" + req.fileName,
-                mimetype: AllowedFileTypes.PNG,
-            },
-        };
-        const response = await DocumentModel.createRessource(newDocumentData);
+        if (req.file.mimetype in AllowedFileTypes) {
+            const newDocumentData = {
+                user: {
+                    ...req.body,
+                },
+                file: {
+                    full_path: directory + "/" + req.fileName,
+                    mimetype: req.file.mimetype as AllowedFileTypes,
+                },
+            };
+            const response = await DocumentModel.createRessource(newDocumentData);
 
-        if (!response.status) return next(new CustomError(500, response.message));
+            if (!response.status) return next(new CustomError(500, response.message));
 
-        res.status(201).send({ message: response.message, data: response.data });
+            res.status(201).send({ message: response.message, data: response.data });
+        }
+
     } catch (error) {
         const { status, message } = extractStatusAndMessageFromErr(error);
 

@@ -23,7 +23,7 @@ export const API_login: IAPI_login = async (email, password) => {
 
         return Promise.resolve({
             status: true,
-            message: "Login successfuly!",
+            message: "Logged in successfuly!",
             data: data as IUser,
         });
     } catch (error) {

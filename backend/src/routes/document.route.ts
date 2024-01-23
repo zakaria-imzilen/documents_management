@@ -20,8 +20,8 @@ documentRouter.get("/", getAllDocuments);
 documentRouter.post(
     "/",
     uploadDocument,
-    validateBody_User,
-    request_validation,
+    // validateBody_User,
+    // request_validation,
     createDocumentController
 );
 

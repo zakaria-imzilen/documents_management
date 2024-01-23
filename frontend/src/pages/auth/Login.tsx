@@ -23,9 +23,9 @@ const layoutStyle: CSSProperties = {
     transform: "translate(-50%, -50%)",
     width: "calc(50% - 8px)",
     maxWidth: 600,
-    backgroundColor: "#404040",
+    backgroundColor: "rgb(24, 24, 24)",
     borderRadius: 5,
-    padding: "10px calc(5%)",
+    padding: "calc(5%)",
 };
 
 const typographyStyle: CSSProperties = {
@@ -106,7 +106,7 @@ const Login = () => {
     );
 
     return (
-        <Layout style={layoutStyle}>
+        <Layout className="dark-bg" style={layoutStyle} id="login-page">
             <Title style={typographyStyle} level={2}>
                 Sign in
             </Title>
