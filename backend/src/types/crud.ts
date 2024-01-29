@@ -1,4 +1,4 @@
-import { IDocumentDB } from "./models/document";
+import { IDocument, IDocumentDB } from "./models/document";
 
 export type CreateRessourceSuccResponse = {
     status: true;
@@ -7,6 +7,17 @@ export type CreateRessourceSuccResponse = {
 }
 
 export type CreateRessourceFailResponse = {
+    status: false;
+    message: string;
+}
+
+export type GetRessourceWithFilterSuccResponse = {
+    status: true;
+    message: string;
+    data: IDocument[]
+}
+
+export type GetRessourceWithFilterFailResponse = {
     status: false;
     message: string;
 }

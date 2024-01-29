@@ -1,6 +1,8 @@
-import { useQuery } from "@tanstack/react-query";
 import { Table, TableProps } from "antd";
-import { axiosMainInstance } from "../utils/api";
+import { apiBaseURL, axiosMainInstance } from "../utils/api";
+import { useEffect, useState } from "react";
+import socketIO from "../utils/socket";
+import Title from "antd/es/typography/Title";
 
 interface IDoc {
     createdTime: string;
@@ -35,16 +37,49 @@ const columns: TableProps<IDoc>["columns"] = [
 ];
 
 export const DocumentsTable = () => {
-    const { isLoading, error, data } = useQuery({
-        queryKey: ["documents/get"],
-        queryFn: () => axiosMainInstance.get("http://localhost:5001/api/document"),
-    });
+    const [filesData, setFilesData] = useState<any[]>([]);
 
-    if (isLoading) return "Loading..";
+    useEffect(() => {
+        axiosMainInstance
+            .get(`${apiBaseURL}/document`)
+            .then(({ data }) => {
+                if (data.data) {
+                    setFilesData(data.data);
+                }
+            })
+            .catch((err) => {
+                console.error(err);
+            });
+    }, []);
 
-    if (error) return "Error";
-    if (data) {
-        console.log(data.data.files);
-        return <Table style={{ backgroundColor: "#424769" }} columns={columns} dataSource={data.data.files as IDoc[]} />;
-    }
+    useEffect(() => {
+        socketIO.on("document", (coming) => {
+            console.log("Coming in", coming);
+
+            if (coming.operationType == "insert") {
+                const newFileAdded = coming.document;
+                if (newFileAdded) setFilesData((prev) => [...prev, newFileAdded]);
+            }
+        });
+    }, []);
+
+    return filesData.length == 0 ? (
+        <Title level={5} style={{ color: "white" }}>Empty</Title>
+    ) : (
+        <>
+            <Table
+                // style={{ backgroundColor: "#424769" }}
+                columns={columns}
+                dataSource={filesData as IDoc[]}
+            />
+            <style>
+                {`
+                table {
+                    background-color: #131629;
+                    color: white;
+                }
+            `}
+            </style>
+        </>
+    );
 };

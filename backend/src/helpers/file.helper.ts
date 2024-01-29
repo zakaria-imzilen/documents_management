@@ -1,6 +1,5 @@
-import { readdir, unlink } from "fs/promises";
+import { readdir, unlink, readFile, stat } from "fs/promises";
 import anyOtherError from "../config/logs/anyOtherError";
-import { readFile, stat } from "fs/promises";
 import path from "path";
 import { lookup } from "mime-types";
 
@@ -33,7 +32,6 @@ export const getDirectoryFiles = async (dir: string) => {
                 return null;
             })
         );
-        console.log("Files", fileList);
 
         return { status: true, files: fileList };
     } catch (error) {
@@ -60,5 +58,36 @@ export const unlinkDocument = async (dir: string, documentPath: string) => {
             status: false,
             error,
         };
+    }
+};
+
+export const getDocument = async (
+    fullPath: string
+): Promise<{
+    name: string;
+    mimeType: string;
+    dataUrl: string;
+    size: number;
+    createdTime: Date;
+    modifiedTime: Date;
+} | null> => {
+    const fileName = path.basename(fullPath);
+
+    try {
+        const fileContent = await readFile(fullPath, "base64");
+        const mimeType = lookup(fileName) || "application/octet-stream";
+        const { size, birthtime, mtime } = await stat(fullPath);
+
+        return {
+            name: fileName,
+            mimeType,
+            dataUrl: `data:${mimeType};base64,${fileContent}`,
+            size,
+            createdTime: birthtime,
+            modifiedTime: mtime,
+        };
+    } catch (error) {
+        console.log("Reading file error: ", error)
+        return null;
     }
 };

@@ -23,7 +23,8 @@ export default async (req: Request, res: Response, next: NextFunction) => {
     }
     try {
         await connect(db_uri, { dbName: "documents_management" });
-        console.log("✅ DB -- Connected")
+        console.log("✅ DB -- Connected");
+
         next();
     } catch (error) {
         console.log(error)

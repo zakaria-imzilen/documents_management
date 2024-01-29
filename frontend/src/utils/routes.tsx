@@ -1,4 +1,3 @@
-import React from "react";
 import Login from "../pages/auth/Login";
 import Home from "../pages/Home"
 

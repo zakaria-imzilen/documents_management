@@ -2,7 +2,6 @@ import { NextFunction, Request, Response } from "express";
 import file_upload from "../../config/file_upload";
 import {
     CustomError,
-    extractStatusAndMessageFromErr,
 } from "../../helpers/error.helper";
 import path from "path";
 import { getDirectoryFiles, unlinkDocument } from "../../helpers/file.helper";

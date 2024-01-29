@@ -4,6 +4,7 @@ export interface IUser {
     lastName: string;
     email: string;
     password: string;
+    image: string
 }
 
 export interface IUserStateConn {

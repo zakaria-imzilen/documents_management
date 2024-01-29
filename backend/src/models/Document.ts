@@ -1,7 +1,9 @@
-import { Schema, model } from "mongoose";
+import { Schema, Types, model } from "mongoose";
 import { IDocument } from "../types/models/document";
+import { socket_server_init } from "../server";
+import { getDocument } from "../helpers/file.helper";
 
-var validateEmail = function (email: string): boolean {
+export const validateEmail = function (email: string): boolean {
     var re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     return re.test(email);
 };
@@ -9,22 +11,9 @@ var validateEmail = function (email: string): boolean {
 const schema = new Schema(
     {
         user: {
-            fullName: {
-                type: String,
-                // required: true,
-            },
-            email: {
-                type: String,
-                // required: "Email address is required",
-                trim: true,
-                lowercase: true,
-                // unique: true,
-                validate: [validateEmail, "Please fill a valid email address"],
-                match: [
-                    /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
-                    "Please fill a valid email address",
-                ],
-            },
+            type: Types.ObjectId,
+            ref: "User",
+            required: true
         },
         file: {
             full_path: String,
@@ -45,4 +34,23 @@ const schema = new Schema(
     }
 );
 
-export default model<IDocument>("Document", schema);
+const Document = model<IDocument>("Document", schema);
+Document.watch().on("change", async (data) => {
+    console.log("Document Modal got changes", data);
+
+    try {
+        console.log("Full Doc:", data.fullDocument)
+        const document = await getDocument(data.fullDocument.file.full_path);
+        if (document) {
+            console.log("My document: ", document)
+            socket_server_init.emit("document", {
+                operationType: data.operationType,
+                document: document,
+            });
+        }
+    } catch (error) {
+        console.log("While watching document model, got this error:", error);
+    }
+});
+
+export default Document;

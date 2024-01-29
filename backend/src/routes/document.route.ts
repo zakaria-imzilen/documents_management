@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createDocumentController } from "../controllers/document.controller";
+import { createDocumentController, getUserDocuments } from "../controllers/document.controller";
 import {
     deleteDocument,
     getAllDocuments,
@@ -7,6 +7,7 @@ import {
 } from "../middlewares/document/file_operations";
 import { body } from "express-validator";
 import request_validation from "../middlewares/request_validation";
+import loginToken from "../middlewares/auth/loginToken";
 
 const documentRouter = Router();
 
@@ -15,10 +16,11 @@ const validateBody_User = [
     body("email").isEmail(),
 ];
 
-documentRouter.get("/", getAllDocuments);
+documentRouter.get("/", loginToken, getUserDocuments);
 
 documentRouter.post(
     "/",
+    loginToken,
     uploadDocument,
     // validateBody_User,
     // request_validation,

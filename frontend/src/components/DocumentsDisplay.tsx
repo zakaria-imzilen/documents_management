@@ -6,7 +6,7 @@ import { Flex } from "antd";
 const DocumentsDisplay = () => {
     const { isLoading, error, data } = useQuery({
         queryKey: ["documents/get"],
-        queryFn: () => axiosMainInstance.get("http://localhost:5001/api/document"),
+        queryFn: () => axiosMainInstance.get(`/document`),
     });
 
     if (isLoading) return "Loading..";

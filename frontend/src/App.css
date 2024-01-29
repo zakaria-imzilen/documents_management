@@ -27,5 +27,9 @@ body {
 }
 
 #home-page table tr.ant-table-row:hover {
-	color: black;
+	color: black !important;
+}
+
+tbody > tr:hover > td {
+	background: #1c2755 !important;
 }

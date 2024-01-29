@@ -9,7 +9,7 @@ import { requestBodyForUploadDoc } from "./helpers";
 
 config({ path: __dirname + "/../../environments/.env" });
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT_TEST;
 console.log(__dirname + "/../../environments/.env");
 console.log("PORT TEST: ", PORT);
 

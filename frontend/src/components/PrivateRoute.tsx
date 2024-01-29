@@ -1,16 +1,50 @@
-import { useContext } from 'react'
-import userContext from '../context/user.context'
-import { Navigate } from 'react-router-dom';
-import Layout from './Layout';
+import { useContext, useEffect } from "react";
+import userContext from "../context/user.context";
+import { Navigate } from "react-router-dom";
+import useSocketConn from "../hooks/useSocketConn";
+import SocketContext from "../context/socket.context";
+import { useQuery } from "@tanstack/react-query";
+import { User_Login } from "../utils/api";
+import toast from "react-hot-toast";
+import Layout from "./Layout";
 
 const PrivateRoute = () => {
     const consumingUserContext = useContext(userContext);
     if (!consumingUserContext) throw new Error("User Context not provided");
 
-    const { userState } = consumingUserContext;
+    const { userState, setUserState } = consumingUserContext;
 
-    if (userState.isConnected) return <Layout />;
-    return <Navigate to={"/login"} />
-}
+    const { isLoading, error, data } = useQuery({
+        queryKey: ["todos"],
+        queryFn: User_Login,
+    });
 
-export default PrivateRoute
+    useEffect(() => {
+        toast.promise(User_Login(), {
+            loading: "Logging in...",
+            success: "Welcome back",
+            error: "Session expired!",
+        });
+    }, []);
+
+    const socketConnection = useSocketConn();
+    if (userState.isConnected)
+        return (
+            <SocketContext.Provider value={socketConnection}>
+                <Layout />
+            </SocketContext.Provider>
+        );
+
+    if (isLoading) {
+        return null;
+    }
+
+    if (data) {
+        setUserState({ isConnected: true, data: data.user });
+        return null;
+    }
+
+    if (error) return <Navigate to={"/login"} />;
+};
+
+export default PrivateRoute;

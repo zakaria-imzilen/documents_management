@@ -1,8 +1,7 @@
+import { Types } from "mongoose";
+
 export interface IDocument {
-    user: {
-        fullName: string;
-        email: string;
-    };
+    user: Types.ObjectId;
     file: {
         full_path: string;
         mimetype: AllowedFileTypes;
