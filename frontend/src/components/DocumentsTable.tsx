@@ -1,10 +1,10 @@
-import { Table, TableProps } from "antd";
-import { apiBaseURL, axiosMainInstance } from "../utils/api";
-import { useEffect, useState } from "react";
+import { Empty, Flex } from "antd";
+import { Dispatch, SetStateAction, useEffect } from "react";
 import socketIO from "../utils/socket";
 import Title from "antd/es/typography/Title";
+import SingleFile from "./SingleFile";
 
-interface IDoc {
+export interface IDoc {
     createdTime: string;
     dataUrl: string;
     mimeType: string;
@@ -13,45 +13,36 @@ interface IDoc {
     size: number;
 }
 
-const columns: TableProps<IDoc>["columns"] = [
-    {
-        title: "Name",
-        dataIndex: "name",
-        key: "name",
-    },
-    {
-        title: "Size",
-        dataIndex: "size",
-        key: "size",
-    },
-    {
-        title: "Format",
-        dataIndex: "mimeType",
-        key: "mimeType",
-    },
-    {
-        title: "Date",
-        dataIndex: "createdTime",
-        key: "createdTime",
-    },
-];
+// const columns: TableProps<IDoc>["columns"] = [
+//     {
+//         title: "Name",
+//         dataIndex: "name",
+//         key: "name",
+//     },
+//     {
+//         title: "Size",
+//         dataIndex: "size",
+//         key: "size",
+//     },
+//     {
+//         title: "Format",
+//         dataIndex: "mimeType",
+//         key: "mimeType",
+//     },
+//     {
+//         title: "Date",
+//         dataIndex: "createdTime",
+//         key: "createdTime",
+//     },
+// ];
 
-export const DocumentsTable = () => {
-    const [filesData, setFilesData] = useState<any[]>([]);
-
-    useEffect(() => {
-        axiosMainInstance
-            .get(`${apiBaseURL}/document`)
-            .then(({ data }) => {
-                if (data.data) {
-                    setFilesData(data.data);
-                }
-            })
-            .catch((err) => {
-                console.error(err);
-            });
-    }, []);
-
+export const DocumentsTable = ({
+    filesData,
+    setFilesData,
+}: {
+    filesData: any[];
+    setFilesData: Dispatch<SetStateAction<any[]>>;
+}) => {
     useEffect(() => {
         socketIO.on("document", (coming) => {
             console.log("Coming in", coming);
@@ -64,22 +55,18 @@ export const DocumentsTable = () => {
     }, []);
 
     return filesData.length == 0 ? (
-        <Title level={5} style={{ color: "white" }}>Empty</Title>
+        <Empty description={false} style={{ margin: "auto" }} />
     ) : (
         <>
-            <Table
-                // style={{ backgroundColor: "#424769" }}
-                columns={columns}
-                dataSource={filesData as IDoc[]}
-            />
-            <style>
-                {`
-                table {
-                    background-color: #131629;
-                    color: white;
-                }
-            `}
-            </style>
+            <Flex
+                vertical
+                gap={5}
+                style={{ height: 500, overflowY: "auto", width: "100%" }}
+            >
+                {filesData.map((singleDoc) => (
+                    <SingleFile key={singleDoc.id} {...singleDoc} />
+                ))}
+            </Flex>
         </>
     );
 };

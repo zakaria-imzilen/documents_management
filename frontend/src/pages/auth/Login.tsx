@@ -1,4 +1,4 @@
-import React, {
+import {
     CSSProperties,
     ChangeEventHandler,
     FormEventHandler,
@@ -14,6 +14,7 @@ import { convertArrToObj } from "../../utils/helpers";
 import { API_login } from "../../utils/api/mock";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import Logo from "../../assets/Long_Logo.png"
 import userContext from "../../context/user.context";
 
 const layoutStyle: CSSProperties = {
@@ -23,7 +24,7 @@ const layoutStyle: CSSProperties = {
     transform: "translate(-50%, -50%)",
     width: "calc(50% - 8px)",
     maxWidth: 600,
-    backgroundColor: "rgb(24, 24, 24)",
+    backgroundColor: "black",
     borderRadius: 5,
     padding: "calc(5%)",
 };
@@ -106,7 +107,9 @@ const Login = () => {
     );
 
     return (
-        <Layout className="dark-bg" style={layoutStyle} id="login-page">
+        <Layout style={layoutStyle} id="login-page">
+            <img src={Logo} alt="Logo" />
+
             <Title style={typographyStyle} level={2}>
                 Sign in
             </Title>

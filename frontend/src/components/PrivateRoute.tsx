@@ -15,7 +15,7 @@ const PrivateRoute = () => {
     const { userState, setUserState } = consumingUserContext;
 
     const { isLoading, error, data } = useQuery({
-        queryKey: ["todos"],
+        queryKey: ["login_token"],
         queryFn: User_Login,
     });
 
@@ -26,6 +26,10 @@ const PrivateRoute = () => {
             error: "Session expired!",
         });
     }, []);
+
+    useEffect(() => {
+        if (data) setUserState({ isConnected: true, data: data.user });
+    }, [data]);
 
     const socketConnection = useSocketConn();
     if (userState.isConnected)
@@ -39,10 +43,7 @@ const PrivateRoute = () => {
         return null;
     }
 
-    if (data) {
-        setUserState({ isConnected: true, data: data.user });
-        return null;
-    }
+    if (data) return null;
 
     if (error) return <Navigate to={"/login"} />;
 };

@@ -11,9 +11,11 @@ body {
 	background-color: #2d3250;
 }
 :root:has(#login-page) {
-	background-color: rgba(0, 0, 0, 0.7);
-	background-image: url(https://images.unsplash.com/photo-1532153975070-2e9ab71f1b14?q=80&w=3270&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);
-	background-blend-mode: hard-light;
+	background-image: url(https://img.freepik.com/free-photo/top-view-grey-clouds-arrangement_23-2148964565.jpg?w=2000&t=st=1706626407~exp=1706627007~hmac=c88c7eb04caff5f91fa4ba5270730a7438269fca76bdfec547c777468456db47);
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	height: 100vh;
 }
 
 #home-page table {

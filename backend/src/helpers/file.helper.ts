@@ -82,7 +82,7 @@ export const getDocument = async (
             name: fileName,
             mimeType,
             dataUrl: `data:${mimeType};base64,${fileContent}`,
-            size,
+            size: size / (1024 * 1024),
             createdTime: birthtime,
             modifiedTime: mtime,
         };

@@ -17,7 +17,7 @@ const DocumentsDisplay = () => {
 
         return (
             <Flex gap={3} justify="space-around">
-                {files.map((doc: any) => <SingleDocumentDisplay file={doc} />)}
+                {files.map((doc: any) => <SingleDocumentDisplay key={doc.id} file={doc} />)}
             </Flex>
         );
     }

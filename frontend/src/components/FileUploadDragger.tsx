@@ -1,7 +1,7 @@
 import React from "react";
-import { InboxOutlined, UploadOutlined } from "@ant-design/icons";
+import { InboxOutlined } from "@ant-design/icons";
 import type { UploadProps } from "antd";
-import { Button, message, Upload } from "antd";
+import { message, Upload } from "antd";
 import { apiBaseURL } from "../utils/api";
 
 const { Dragger } = Upload;
@@ -29,9 +29,13 @@ const props: UploadProps = {
 };
 
 const FileUploadDragger: React.FC = () => (
-    <Upload {...props}>
-        <Button icon={<UploadOutlined />}>Click to Upload</Button>
-    </Upload>
+    <Dragger itemRender={() => ""} {...props} height={200} style={{ backgroundColor: "rgb(0, 0, 40)" }}>
+        <p className="ant-upload-drag-icon" style={{ verticalAlign: "center" }}>
+            <InboxOutlined />
+            <br />
+            <span style={{ color: "white", fontSize: 12, fontFamily: "sans-serif" }}>Upload file</span>
+        </p>
+    </Dragger>
 );
 
 export default FileUploadDragger;

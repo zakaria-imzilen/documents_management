@@ -11,12 +11,26 @@ interface IProps {
 
 const Content = ({ collapsed, setCollapsed, children }: IProps) => {
     const {
-        token: { borderRadiusLG, },
+        token: { borderRadiusLG },
     } = theme.useToken();
 
     return (
-        <Layout style={{ backgroundColor: "#131629" }}>
-            <Header style={{ padding: 0, background: "#131629" }}>
+        <Layout
+            style={{
+                height: "100vh",
+                overflowY: "auto",
+                backgroundColor: "#131629",
+            }}
+        >
+            <Header
+                style={{
+                    padding: 0,
+                    position: "sticky",
+                    top: 0,
+                    backgroundColor: "rgb(19, 22, 41)",
+                    zIndex: 2,
+                }}
+            >
                 <Button
                     type="text"
                     icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
@@ -25,13 +39,13 @@ const Content = ({ collapsed, setCollapsed, children }: IProps) => {
                         fontSize: "16px",
                         width: 64,
                         height: 64,
-                        color: "white"
+                        color: "white",
                     }}
                 />
             </Header>
             <ContentANTD
                 style={{
-                    margin: "24px 16px",
+                    margin: "0px 16px",
                     padding: 24,
                     minHeight: 280,
                     background: "#131629",
