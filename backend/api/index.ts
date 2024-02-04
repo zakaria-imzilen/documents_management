@@ -3,7 +3,6 @@ import morgan from "morgan";
 import { config } from "dotenv";
 import cors from "cors";
 import "../services/starategy.service";
-import session from "express-session";
 import cookieParser from "cookie-parser";
 import passport from "passport";
 import badRequest from "../middlewares/badRequest";
@@ -11,6 +10,7 @@ import authRouter from "../routes/auth.route";
 import documentRouter from "../routes/document.route";
 import dbConnecting from "../config/db";
 import errorMiddleware from "../middlewares/error";
+import session from "cookie-session";
 
 config({ path: __dirname + "/environments/.env" });
 
