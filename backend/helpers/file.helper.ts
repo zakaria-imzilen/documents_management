@@ -1,5 +1,5 @@
 import { readdir, unlink, readFile, stat } from "fs/promises";
-import anyOtherError from "../config/logs/anyOtherError";
+import anyOtherError from "../logs/anyOtherError";
 import path from "path";
 import { lookup } from "mime-types";
 import { ListResult, listAll, ref } from "firebase/storage";

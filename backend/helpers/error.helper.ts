@@ -1,8 +1,8 @@
 import { MongooseError } from "mongoose";
-import anyOtherError from "../config/logs/anyOtherError";
-import typeError from "../config/logs/typeError";
+import anyOtherError from "../logs/anyOtherError";
+import typeError from "../logs/typeError";
 import { CustomErrorInt } from "../types/error";
-import database from "../config/logs/database";
+import database from "../logs/database";
 import { ValidationError } from "express-validator";
 import { FirebaseError } from "firebase/app";
 
