@@ -1,13 +1,13 @@
 export const convertArrToObj = <T>(
-    arr: T[],
-    keyToReturn: string
+  arr: T[],
+  keyToReturn: string
 ): { [key: string]: string } => {
-    const returnedObj = {};
+  const returnedObj = {};
 
-    arr.forEach((elem) => {
-        const key = elem[keyToReturn];
-        if (key) returnedObj[key] = "";
-    });
+  arr.forEach((elem) => {
+    const key = elem[keyToReturn];
+    if (key) returnedObj[key] = "";
+  });
 
-    return returnedObj;
+  return returnedObj;
 };

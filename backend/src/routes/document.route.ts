@@ -1,30 +1,31 @@
 import { Router } from "express";
-import { createDocumentController, getUserDocuments } from "../controllers/document.controller";
 import {
-    deleteDocument,
-    getAllDocuments,
-    uploadDocument,
+  createDocumentController,
+  getUserDocuments,
+  getUserFiles,
+} from "../controllers/document.controller";
+import {
+  deleteDocument,
+  uploadDocumentOnFirebase,
 } from "../middlewares/document/file_operations";
-import { body } from "express-validator";
-import request_validation from "../middlewares/request_validation";
 import loginToken from "../middlewares/auth/loginToken";
+import { temporaryStorage } from "../config/file_upload";
 
 const documentRouter = Router();
 
-const validateBody_User = [
-    body("fullName").notEmpty(),
-    body("email").isEmail(),
-];
-
-documentRouter.get("/", loginToken, getUserDocuments);
+documentRouter.get(
+  "/",
+  loginToken,
+  // getUserDocuments
+  getUserFiles
+);
 
 documentRouter.post(
-    "/",
-    loginToken,
-    uploadDocument,
-    // validateBody_User,
-    // request_validation,
-    createDocumentController
+  "/",
+  loginToken,
+  temporaryStorage.single("document"),
+  uploadDocumentOnFirebase,
+  createDocumentController
 );
 
 documentRouter.delete("/:path", deleteDocument);

@@ -9,43 +9,44 @@ import toast from "react-hot-toast";
 import Layout from "./Layout";
 
 const PrivateRoute = () => {
-    const consumingUserContext = useContext(userContext);
-    if (!consumingUserContext) throw new Error("User Context not provided");
+  const consumingUserContext = useContext(userContext);
+  if (!consumingUserContext) throw new Error("User Context not provided");
 
-    const { userState, setUserState } = consumingUserContext;
+  const { userState, setUserState } = consumingUserContext;
 
-    const { isLoading, error, data } = useQuery({
-        queryKey: ["login_token"],
-        queryFn: User_Login,
+  const { isLoading, error, data } = useQuery({
+    queryKey: ["login_token"],
+    queryFn: User_Login,
+    retry: false,
+  });
+
+  useEffect(() => {
+    toast.promise(User_Login(), {
+      loading: "Logging in...",
+      success: "Welcome back",
+      error: "Session expired!",
     });
+  }, []);
 
-    useEffect(() => {
-        toast.promise(User_Login(), {
-            loading: "Logging in...",
-            success: "Welcome back",
-            error: "Session expired!",
-        });
-    }, []);
+  useEffect(() => {
+    if (data) setUserState({ isConnected: true, data: data.user });
+  }, [data]);
 
-    useEffect(() => {
-        if (data) setUserState({ isConnected: true, data: data.user });
-    }, [data]);
+  const socketConnection = useSocketConn();
+  if (userState.isConnected)
+    return (
+      <SocketContext.Provider value={socketConnection}>
+        <Layout />
+      </SocketContext.Provider>
+    );
 
-    const socketConnection = useSocketConn();
-    if (userState.isConnected)
-        return (
-            <SocketContext.Provider value={socketConnection}>
-                <Layout />
-            </SocketContext.Provider>
-        );
+  if (isLoading) {
+    return null;
+  }
 
-    if (isLoading) {
-        return null;
-    }
+  if (data) return null;
 
-    if (data) return null;
-
-    if (error) return <Navigate to={"/login"} />;
+  if (error) return <Navigate to={"/login"} />;
 };
 
 export default PrivateRoute;

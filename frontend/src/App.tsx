@@ -6,6 +6,7 @@ import { Toaster } from "react-hot-toast";
 import PrivateRoute from "./components/PrivateRoute";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import UserProvider from "./context/UserProvider";
+import ModalProvider from "./context/ModalProvider";
 
 const queryClient = new QueryClient();
 
@@ -13,17 +14,19 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <UserProvider>
-        <Routes routes={publicRoutes} />
+        <ModalProvider>
+          <Routes routes={publicRoutes} />
 
-        <RoutesWrapper>
-          <Route path="/" element={<PrivateRoute />}>
-            {privateRoutes.map((privateRoute) => (
-              <Route key={privateRoute.id} {...privateRoute} />
-            ))}
-          </Route>
-        </RoutesWrapper>
+          <RoutesWrapper>
+            <Route path="/" element={<PrivateRoute />}>
+              {privateRoutes.map((privateRoute) => (
+                <Route key={privateRoute.id} {...privateRoute} />
+              ))}
+            </Route>
+          </RoutesWrapper>
 
-        <Toaster />
+          <Toaster />
+        </ModalProvider>
       </UserProvider>
     </QueryClientProvider>
   );

@@ -5,7 +5,7 @@ import {
   ShareAltOutlined,
   StarFilled,
 } from "@ant-design/icons";
-import { Badge, Menu } from "antd";
+import { Badge, Button, Flex, Menu } from "antd";
 import Sider from "antd/es/layout/Sider";
 import Main_Logo from "../../assets/Long_Logo.png";
 import Minimal_Logo from "../../assets/Min.png";
@@ -13,6 +13,7 @@ import { useCallback, useContext } from "react";
 import userContext from "../../context/user.context";
 import { axiosMainInstance } from "../../utils/api";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 interface IProps {
   collapsed: boolean;
@@ -23,6 +24,7 @@ const SideBar = ({ collapsed }: IProps) => {
   if (!consumingUserContext) throw new Error("User Context not provided");
 
   const { userState, setUserState } = consumingUserContext;
+  const navigate = useNavigate();
 
   const logOut = useCallback(async () => {
     console.log("Running");
@@ -33,8 +35,8 @@ const SideBar = ({ collapsed }: IProps) => {
         error: "Could'nt logging out for some reason",
         loading: "Loading..",
       });
-      await axiosMainInstance.get("/auth/logout");
       setUserState({ isConnected: false, data: null });
+      navigate("/login");
     } catch (error) {
       console.error(error);
     }
@@ -103,7 +105,42 @@ const SideBar = ({ collapsed }: IProps) => {
         ]}
       />
 
-      <Menu
+      <Flex
+        vertical
+        style={{
+          backgroundColor: "black",
+          position: "absolute",
+          left: collapsed ? 35 : 50,
+          bottom: 40,
+        }}
+        gap={10}
+      >
+        <Badge dot={true} color={"gold"}>
+          {collapsed ? (
+            <SettingFilled style={{ color: "white" }} />
+          ) : (
+            <Button type="dashed" ghost icon={<SettingFilled />}>
+              Settings
+            </Button>
+          )}
+        </Badge>
+        <Badge dot={true} color={"gold"}>
+          {collapsed ? (
+            <LogoutOutlined onClick={logOut} style={{ color: "white" }} />
+          ) : (
+            <Button
+              onClick={logOut}
+              type="dashed"
+              ghost
+              icon={<LogoutOutlined />}
+            >
+              Log Out
+            </Button>
+          )}
+        </Badge>
+      </Flex>
+
+      {/* <Menu
         theme="dark"
         mode="inline"
         style={{
@@ -132,7 +169,7 @@ const SideBar = ({ collapsed }: IProps) => {
             label: "Log out",
           },
         ]}
-      />
+      /> */}
 
       <style>
         {`.ant-menu-item-selected {

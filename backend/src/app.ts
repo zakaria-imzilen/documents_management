@@ -17,11 +17,12 @@ config({ path: __dirname + "/environments/.env" });
 const app = express();
 
 declare global {
-    namespace Express {
-        interface Request {
-            fileName?: string;
-        }
+  namespace Express {
+    interface Request {
+      fileName?: string;
+      filePath?: string;
     }
+  }
 }
 
 app.use(morgan("dev"));
@@ -31,19 +32,19 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(
-    cors({
-        origin: "http://localhost:5173",
-        credentials: true
-    })
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
 );
 
 app.use(passport.initialize());
 app.use(passport.session());
 
 app.use((req, res, next) => {
-    console.log("Request Body: ", req.body);
-    console.log("Request Cookies: ", req.cookies);
-    next();
+  console.log("Request Body: ", req.body);
+  console.log("Request Cookies: ", req.cookies);
+  next();
 });
 
 app.use("/api/document", dbConnecting, documentRouter);

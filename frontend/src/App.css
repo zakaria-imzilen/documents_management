@@ -1,37 +1,37 @@
 body {
-	margin: 0;
-	padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
 :root:has(.dark-bg) {
-	background-color: rgb(24, 24, 24);
+  background-color: rgb(24, 24, 24);
 }
 
 :root:has(#home-page) {
-	background-color: #2d3250;
+  background-color: #2d3250;
 }
 :root:has(#login-page) {
-	background-image: url(https://img.freepik.com/free-photo/top-view-grey-clouds-arrangement_23-2148964565.jpg?w=2000&t=st=1706626407~exp=1706627007~hmac=c88c7eb04caff5f91fa4ba5270730a7438269fca76bdfec547c777468456db47);
-	background-position: center;
-	background-repeat: no-repeat;
-	background-size: cover;
-	height: 100vh;
+  background-image: url(assets/login_background.jpg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100vh;
 }
 
 #home-page table {
-	background-color: rgb(24, 24, 24);
-	color: white;
+  background-color: rgb(24, 24, 24);
+  color: white;
 }
 
 #home-page table th.ant-table-cell {
-	color: white;
-	background-color: #2d3250;
+  color: white;
+  background-color: #2d3250;
 }
 
 #home-page table tr.ant-table-row:hover {
-	color: black !important;
+  color: black !important;
 }
 
 tbody > tr:hover > td {
-	background: #1c2755 !important;
+  background: #1c2755 !important;
 }
