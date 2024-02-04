@@ -6,11 +6,11 @@ import "./services/starategy.service";
 import session from "express-session";
 import cookieParser from "cookie-parser";
 import passport from "passport";
-import badRequest from "../src/middlewares/badRequest";
-import authRouter from "../src/routes/auth.route";
-import documentRouter from "../src/routes/document.route";
-import dbConnecting from "../src/config/db";
-import errorMiddleware from "../src/middlewares/error";
+import badRequest from "../middlewares/badRequest";
+import authRouter from "../routes/auth.route";
+import documentRouter from "../routes/document.route";
+import dbConnecting from "../config/db";
+import errorMiddleware from "../middlewares/error";
 
 config({ path: __dirname + "/environments/.env" });
 
