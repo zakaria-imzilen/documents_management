@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.ts",
   "scripts": {
-    "build": "npx tsc && cp -r logs dist/",
+    "build": "tsc && cp -r logs dist/",
     "dev": "nodemon server.ts",
     "start": "node dist/server.js",
     "test": "jest --coverage"

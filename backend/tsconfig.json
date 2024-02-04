@@ -1,5 +1,8 @@
 {
-  "include": ["**/*.ts", "logs/**/*.log"],
+  "include": [
+    "src/**/*.ts",
+    "logs/**/*.ts" // Add this line if it's not already present
+  ],
   "compilerOptions": {
     /* Visit https://aka.ms/tsconfig to read more about this file */
     /* Projects */
