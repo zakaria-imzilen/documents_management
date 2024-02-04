@@ -2,7 +2,7 @@ import express from "express";
 import morgan from "morgan";
 import { config } from "dotenv";
 import cors from "cors";
-import "./services/starategy.service";
+import "../services/starategy.service";
 import session from "express-session";
 import cookieParser from "cookie-parser";
 import passport from "passport";
