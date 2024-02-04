@@ -1,8 +1,8 @@
 import { MongooseError } from "mongoose";
-import anyOtherError from "../logs/anyOtherError";
-import typeError from "../logs/typeError";
+// import anyOtherError from "../logs/anyOtherError";
+// import typeError from "../logs/typeError";
 import { CustomErrorInt } from "../types/error";
-import database from "../logs/database";
+// import database from "../logs/database";
 import { ValidationError } from "express-validator";
 import { FirebaseError } from "firebase/app";
 
@@ -20,19 +20,19 @@ export const extractStatusAndMessageFromErr = (
   err: Error | CustomError | MongooseError | FirebaseError | any
 ): CustomErrorInt => {
   if (err instanceof Error) {
-    typeError.error(err.message);
+    // typeError.error(err.message);
     return new CustomError(500, "Server's error: Something went wrong");
   } else if (err instanceof CustomError) {
-    anyOtherError.error(err);
+    // anyOtherError.error(err);
     return err;
   } else if (err instanceof MongooseError) {
-    database.error(err);
+    // database.error(err);
     return new CustomError(500, `${err.name}: ${err.message}`);
   } else if (err instanceof FirebaseError) {
     return new CustomError(500, `${err.name}: ${err.message}`);
   } else {
     const errConvertedToJSON = JSON.stringify(err);
-    anyOtherError.error(errConvertedToJSON);
+    // anyOtherError.error(errConvertedToJSON);
 
     return new CustomError(500, errConvertedToJSON);
   }

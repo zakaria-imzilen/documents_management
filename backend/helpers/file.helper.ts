@@ -1,9 +1,7 @@
 import { readdir, unlink, readFile, stat } from "fs/promises";
-import anyOtherError from "../logs/anyOtherError";
+// import anyOtherError from "../logs/anyOtherError";
 import path from "path";
 import { lookup } from "mime-types";
-import { ListResult, listAll, ref } from "firebase/storage";
-import { firebaseStorage } from "../config/file_upload";
 import { extractStatusAndMessageFromErr } from "./error.helper";
 import { Types } from "mongoose";
 import { CustomErrorInt } from "../types/error";
@@ -42,7 +40,7 @@ export const getDirectoryFiles = async (dir: string) => {
 
     return { status: true, files: fileList };
   } catch (error) {
-    anyOtherError.error(error);
+    // anyOtherError.error(error);
     return {
       status: false,
       error,
@@ -83,7 +81,7 @@ export const unlinkDocument = async (dir: string, documentPath: string) => {
       message: "Document got deleted successfuly",
     };
   } catch (error) {
-    anyOtherError.error(error);
+    // anyOtherError.error(error);
     return {
       status: false,
       error,

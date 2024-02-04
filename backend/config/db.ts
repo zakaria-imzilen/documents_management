@@ -1,6 +1,6 @@
 import { config } from "dotenv";
 import { connect } from "mongoose";
-import database from "../logs/database";
+// import database from "../logs/database";
 import { NextFunction, Request, Response } from "express";
 import {
   CustomError,
@@ -18,7 +18,7 @@ export default async (req: Request, res: Response, next: NextFunction) => {
       500,
       "Could not capture DB URI"
     );
-    database.error(message);
+    // database.error(message);
     return next({ status, message: "Server's error" });
   }
   try {
